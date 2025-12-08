@@ -1,0 +1,16 @@
+
+- All CAS4104.01-00 teaching materials (C) Yonsei University, 2008--2025.
+
+- You are granted the right for personal use for CAS4104.01-00.
+
+- You are *not* granted the right to publish course materials.
+
+  - For example, you are not allowed to put the skeleton code or derivations
+    thereof on a public GitHub repository, webserver or similar.
+
+    This measure has been taken to provide equal opportunity for future
+    students.
+
+  - For your own versioning, please use private repositories only. Private
+    Bitbucket, GitHub etc. repositories (Git-based!) are free of charge for
+    university students.
