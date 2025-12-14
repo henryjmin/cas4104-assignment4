@@ -330,7 +330,9 @@ public class SemanticAnalysis implements Visitor {
     // returned, then the program does not contain a main function.
 
     /* Start of your code: */
-
+    if (scopeStack.retrieve("main") == null) {
+      reporter.reportError(errMsg[0], "", progAst.pos);
+    }
     /* End of your code */
   }
 
@@ -362,7 +364,11 @@ public class SemanticAnalysis implements Visitor {
     // x.tAST is of type int.
 
     /* Start of your code: */
-
+    if (x.idAST.Lexeme.equals("main")) {
+      if (!currentFunctionReturnType.Tequal(StdEnvironment.intType)) {
+        reporter.reportError(errMsg[0], "", x.idAST.pos);
+      }
+    }
     /* End of your code */
 
     // STEP 1:
@@ -413,7 +419,14 @@ public class SemanticAnalysis implements Visitor {
     // Report error messages 3 and 4 respectively:
 
     /* Start of your code: */
-
+    if (x.astType.Tequal(StdEnvironment.voidType)) {
+      reporter.reportError(errMsg[3], "", x.astIdent.pos);
+    }
+    if (x.astType instanceof ArrayType) {
+      if (((ArrayType) x.astType).astType.Tequal(StdEnvironment.voidType)) {
+        reporter.reportError(errMsg[4], "", x.astIdent.pos);
+      }
+    }
     /* End of your code */
   }
 
@@ -655,7 +668,14 @@ public class SemanticAnalysis implements Visitor {
     // Report error messages 3 and 4 respectively:
 
     /* Start of your code: */
-
+    if (x.tAST.Tequal(StdEnvironment.voidType)) {
+      reporter.reportError(errMsg[3], "", x.tAST.pos);
+    }
+    if (x.tAST instanceof ArrayType) {
+      if (((ArrayType) x.tAST).astType.Tequal(StdEnvironment.voidType)) {
+        reporter.reportError(errMsg[4], "", x.tAST.pos);
+      }
+    }
     /* End of your code */
   }
 
@@ -926,7 +946,9 @@ public class SemanticAnalysis implements Visitor {
     // where f is not a function. 
 
     /* Start of your code: */
-
+    if (!(d instanceof FunDecl)) {
+      reporter.reportError(errMsg[19], "", x.pos);
+    }
     /* End of your code */
     FunDecl f = (FunDecl ) d;
     // STEP 2:
