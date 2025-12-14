@@ -637,7 +637,30 @@ public class SemanticAnalysis implements Visitor {
         // Perform i2f coercion if necessary.
 
         /* Start of your code: */
-
+        if (!(x.eAST instanceof ExprSequence)) {
+          reporter.reportError(errMsg[15], "", x.pos);
+          return;
+        }
+        Expr es = x.eAST;
+        Type elemType = ((ArrayType) x.tAST).astType;
+        int arraySize = ((ArrayType) x.tAST).GetRange();
+        int numElems = 0;
+        while (es instanceof ExprSequence) {
+          numElems++;
+          if (numElems > arraySize) {
+            reporter.reportError(errMsg[16], "", x.pos);
+          }
+          Expr elem = ((ExprSequence) es).lAST;
+          if (elem.type.AssignableTo(elemType)) {
+            if (elemType.Tequal(StdEnvironment.floatType)
+                && elem.type.Tequal(StdEnvironment.intType)) {
+              ((ExprSequence) es).lAST = i2f(elem);
+            }
+          } else {
+            reporter.reportError(errMsg[13], "", elem.pos);
+          }
+          es = ((ExprSequence) es).rAST;
+        }
         /* End of your code */
       } else {
         //STEP 4:
@@ -647,7 +670,18 @@ public class SemanticAnalysis implements Visitor {
         // Perform i2f coercion if necessary.
 
         /* Start of your code: */
-
+        if (x.eAST instanceof ExprSequence) {
+          reporter.reportError(errMsg[14], "", x.pos);
+          return;
+        }
+        if (x.eAST.type.AssignableTo(x.tAST)) {
+          if (x.eAST.type.Tequal(StdEnvironment.floatType)
+              && x.tAST.Tequal(StdEnvironment.intType)) {
+            x.eAST = i2f(x.eAST);
+          }
+        } else {
+          reporter.reportError(errMsg[6], "", x.pos);
+        }
         /* End of your code */
       }
     }
