@@ -351,7 +351,9 @@ public class SemanticAnalysis implements Visitor {
     // name is already present in this scope.
 
     /* Start of your code: */
-
+    if (!scopeStack.enter(x.idAST.Lexeme, x)) {
+      reporter.reportError(errMsg[2], "", x.idAST.pos);
+    }
     /* End of your code */
 
     // STEP 3:
@@ -370,7 +372,7 @@ public class SemanticAnalysis implements Visitor {
     // function's compound_stmt.
 
     /* Start of your code: */
-
+    scopeStack.openScope();
     /* End of your code */
 
 
@@ -401,7 +403,9 @@ public class SemanticAnalysis implements Visitor {
     // Error 2 in that case.
 
     /* Start of your code: */
-
+    if (!scopeStack.enter(x.astIdent.Lexeme, x)) {
+      reporter.reportError(errMsg[2], "", x.astIdent.pos);
+    }
     /* End of your code */
 
     // STEP 3:
@@ -555,7 +559,7 @@ public class SemanticAnalysis implements Visitor {
       // a function body.
 
       /* Start of your code: */
-
+      scopeStack.openScope();
       /* End of your code */
     }
     // STEP 1:
@@ -564,7 +568,8 @@ public class SemanticAnalysis implements Visitor {
     // AstGen/CompoundStmt.java to learn about the AST children of this node.
 
     /* Start of your code: */
-
+    x.astDecl.accept(this);
+    x.astStmt.accept(this);
     /* End of your code */
 
     // STEP 1:
@@ -572,7 +577,7 @@ public class SemanticAnalysis implements Visitor {
     // for this compound statement (even if it represents a function body).
 
     /* Start of your code: */
-
+    scopeStack.closeScope();
     /* End of your code */
   }
 
@@ -587,7 +592,7 @@ public class SemanticAnalysis implements Visitor {
     // a function.
 
     /* Start of your code: */
-
+    scopeStack.closeScope();
     /* End of your code */
   }
 
@@ -632,7 +637,9 @@ public class SemanticAnalysis implements Visitor {
     // report Error 2.
 
     /* Start of your code: */
-
+    if (!scopeStack.enter(x.idAST.Lexeme, x)) {
+      reporter.reportError(errMsg[2], "", x.idAST.pos);
+    }
     /* End of your code */
 
     // STEP 3:
@@ -955,7 +962,9 @@ public class SemanticAnalysis implements Visitor {
       x.declAST = binding;
     }
     /* Start of your code: */
-
+    if (binding == null) {
+      reporter.reportError(errMsg[5], "", x.pos);
+    }
     /* End of your code */
   }
 
