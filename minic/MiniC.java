@@ -44,10 +44,9 @@ public class MiniC {
 
   static void compileProgram(String sourceName) {
     System.out.println("********** MiniC Compiler **********");
-    System.out.println("Syntax Analysis ...");
 
     SourceFile source = new SourceFile(sourceName);
-    scanner  = new Scanner(source);
+    scanner = new Scanner(source);
     /*
      * Uncomment to observe the sequence of tokens
      * delivered by the scanner:
