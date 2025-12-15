@@ -421,8 +421,7 @@ public class SemanticAnalysis implements Visitor {
     /* Start of your code: */
     if (x.astType.Tequal(StdEnvironment.voidType)) {
       reporter.reportError(errMsg[3], "", x.astType.pos);
-    }
-    if (x.astType instanceof ArrayType) {
+    } else if (x.astType instanceof ArrayType) {
       if (((ArrayType) x.astType).astType.Tequal(StdEnvironment.voidType)) {
         reporter.reportError(errMsg[4], "", x.astType.pos);
       }
@@ -613,7 +612,9 @@ public class SemanticAnalysis implements Visitor {
     // a function.
 
     /* Start of your code: */
-    scopeStack.closeScope();
+    if (isFunctionBlock) {
+      scopeStack.closeScope();
+    }
     /* End of your code */
   }
 
@@ -704,8 +705,7 @@ public class SemanticAnalysis implements Visitor {
     /* Start of your code: */
     if (x.tAST.Tequal(StdEnvironment.voidType)) {
       reporter.reportError(errMsg[3], "", x.pos);
-    }
-    if (x.tAST instanceof ArrayType) {
+    } else if (x.tAST instanceof ArrayType) {
       if (((ArrayType) x.tAST).astType.Tequal(StdEnvironment.voidType)) {
         reporter.reportError(errMsg[4], "", x.pos);
       }
@@ -928,7 +928,6 @@ public class SemanticAnalysis implements Visitor {
         x.oAST.type = x.type = StdEnvironment.errorType;
         reporter.reportError(errMsg[10], "", x.pos);
       }
-      return;
     } else if (x.eAST.type.Tequal(StdEnvironment.boolType)) {
       if (hasBoolArgs(x.oAST)) {
         x.type = StdEnvironment.boolType;
@@ -982,6 +981,7 @@ public class SemanticAnalysis implements Visitor {
     /* Start of your code: */
     if (!(d instanceof FunDecl)) {
       reporter.reportError(errMsg[19], "", x.pos);
+      return;
     }
     /* End of your code */
     FunDecl f = (FunDecl ) d;
